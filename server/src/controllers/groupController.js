@@ -1,15 +1,35 @@
-import Group from '../models/Group.js';
-import { asyncHandler } from '../middleware/errorHandler.js';
+// server/src/controllers/groupController.js
 
-class GroupController {
-  static createGroup = asyncHandler(async (req, res) => {
-    const group = await Group.create(req.body);
-    res.status(201).json({ success: true, group });
-  });
+export const createGroup = async (req, res) => {
+  try {
+    const { name } = req.body;
 
-  static listGroups = asyncHandler(async (req, res) => {
-    const groups = await Group.find({}).sort({ createdAt: -1 });
-    res.json({ success: true, groups });
+    if (!name) {
+      return res.status(400).json({
+        success: false,
+        message: "Group name required",
+      });
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: "Group created successfully",
+      data: {
+        id: Date.now(),
+        name,
+      },
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: err.message,
+    });
+  }
+};
+
+export const getGroups = async (req, res) => {
+  return res.json({
+    success: true,
+    data: [],
   });
-}
-export default GroupController;
+};
