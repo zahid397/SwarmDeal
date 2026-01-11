@@ -1,23 +1,31 @@
 'use client';
-import { useState } from 'react';
+
 import { useChat } from '@/context/ChatContext';
-import { Send } from 'lucide-react';
+import { useState } from 'react';
+
 export default function ChatBox() {
-  const { messages, sendMessage, isLoading } = useChat();
+  const { messages, addMessage } = useChat();
   const [input, setInput] = useState('');
+
   return (
-    <div className="bg-gray-800 h-[500px] flex flex-col rounded-xl p-4">
-      <div className="flex-1 overflow-y-auto space-y-2">
+    <div className="bg-gray-800 p-4 rounded">
+      <div className="h-40 overflow-y-auto mb-2">
         {messages.map((m, i) => (
-          <div key={i} className={m.role === 'user' ? 'text-right' : 'text-left'}>
-            <span className={`inline-block p-2 rounded ${m.role === 'user' ? 'bg-blue-600' : 'bg-gray-700'}`}>{m.content}</span>
-          </div>
+          <div key={i} className="text-sm mb-1">{m}</div>
         ))}
       </div>
-      <div className="flex gap-2 mt-2">
-        <input value={input} onChange={e => setInput(e.target.value)} className="flex-1 bg-gray-700 p-2 rounded text-white" />
-        <button onClick={() => { sendMessage(input); setInput(''); }} disabled={isLoading}><Send /></button>
-      </div>
+      <input
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        className="w-full p-2 text-black rounded"
+        placeholder="Type message..."
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            addMessage(input);
+            setInput('');
+          }
+        }}
+      />
     </div>
   );
 }
