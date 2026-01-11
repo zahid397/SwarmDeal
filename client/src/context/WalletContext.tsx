@@ -1,11 +1,26 @@
 'use client';
-import { WagmiConfig, createConfig, configureChains, mainnet } from 'wagmi';
-import { publicProvider } from 'wagmi/providers/public';
-import { InjectedConnector } from 'wagmi/connectors/injected';
-const { chains, publicClient } = configureChains([mainnet], [publicProvider()]);
-const config = createConfig({
-  autoConnect: true, publicClient, connectors: [new InjectedConnector({ chains })],
-});
-export function WalletProvider({ children }: { children: React.ReactNode }) {
-  return <WagmiConfig config={config}>{children}</WagmiConfig>;
+
+import { createContext, useContext, useState, ReactNode } from 'react';
+
+type WalletContextType = {
+  address: string | null;
+  setAddress: (addr: string | null) => void;
+};
+
+const WalletContext = createContext<WalletContextType | undefined>(undefined);
+
+export function WalletProvider({ children }: { children: ReactNode }) {
+  const [address, setAddress] = useState<string | null>(null);
+
+  return (
+    <WalletContext.Provider value={{ address, setAddress }}>
+      {children}
+    </WalletContext.Provider>
+  );
+}
+
+export function useWallet() {
+  const ctx = useContext(WalletContext);
+  if (!ctx) throw new Error('useWallet must be used inside WalletProvider');
+  return ctx;
 }
