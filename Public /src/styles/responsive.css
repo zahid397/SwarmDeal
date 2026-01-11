@@ -1,5 +1,0 @@
-@media (max-width: 768px) {
-.page-layout { grid-template-columns: 1fr !important; }
-.chat-container { height: 80vh; }
-.navbar { padding: 1rem; }
-}
