@@ -1,5 +1,4 @@
 import { asyncHandler } from '../middleware/errorHandler.js';
-import aiService from '../services/aiService.js';
 
 class AgentController {
   static chat = asyncHandler(async (req, res) => {
@@ -10,11 +9,10 @@ class AgentController {
       throw new Error('Message is required');
     }
 
-    const reply = await aiService.chat(message);
-
+    // DEMO RESPONSE
     res.json({
       success: true,
-      reply
+      reply: `Demo AI response for: ${message}`,
     });
   });
 }
