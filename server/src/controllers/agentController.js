@@ -1,5 +1,3 @@
-// server/src/controllers/agentController.js
-
 import aiService from '../services/aiService.js';
 import { asyncHandler } from '../middleware/errorHandler.js';
 
