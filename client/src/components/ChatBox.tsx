@@ -2,10 +2,11 @@
 
 import React, { createContext, useContext, useState } from 'react';
 import api from '@/lib/axios';
-import { useAuth } from './AuthContext';
+// ✅ FIX: Relative path বাদ দিয়ে Absolute Path (@/...) দেওয়া হলো
+import { useAuth } from '@/context/AuthContext'; 
 import toast from 'react-hot-toast';
 
-// ✅ 1. Type Definition (এটা মিসিং ছিল বা ভুল ছিল)
+// Type Definitions
 interface Message {
   role: 'user' | 'ai';
   content: string;
@@ -21,12 +22,12 @@ interface Deal {
 
 interface ChatContextType {
   messages: Message[];
-  sendMessage: (text: string) => Promise<void>; // ✅ এই লাইনটা সবচেয়ে জরুরি
+  sendMessage: (text: string) => Promise<void>;
   isLoading: boolean;
   suggestedDeal: Deal | null;
 }
 
-// Context তৈরি
+// Context Creation
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
 
 export function ChatProvider({ children }: { children: React.ReactNode }) {
@@ -38,33 +39,32 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(false);
   const [suggestedDeal, setSuggestedDeal] = useState<Deal | null>(null);
 
-  // ✅ 2. sendMessage Function Implementation
   const sendMessage = async (text: string) => {
     if (!text.trim()) return;
 
-    // Optional: Guest restriction warn
+    // Optional: Warn if guest
     if (!isAuthenticated && !user) {
         toast('You are chatting as Guest', { icon: '👀' });
     }
 
-    // Add User Message immediately
+    // Add User Message
     const newMsg: Message = { role: 'user', content: text };
     setMessages(prev => [...prev, newMsg]);
     setIsLoading(true);
-    setSuggestedDeal(null); // Clear previous deal if any
+    setSuggestedDeal(null); 
 
     try {
       // API Call
       const { data } = await api.post('/ai/chat', { 
         message: text, 
         address: user?.walletAddress || 'guest_user',
-        context: messages.slice(-5) // Send history for context
+        context: messages.slice(-5) 
       });
 
       // Add AI Response
       setMessages(prev => [...prev, { role: 'ai', content: data.response }]);
       
-      // If deal found, update state
+      // Handle Deal
       if (data.deal) {
         setSuggestedDeal(data.deal);
         toast.success('AI found a potential deal! 🔥');
@@ -72,7 +72,6 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     } catch (error) {
       console.error(error);
       toast.error('AI is taking a nap (Server Error)');
-      // Fallback message so user isn't stuck
       setMessages(prev => [...prev, { role: 'ai', content: "Sorry, I can't connect to the server right now." }]);
     } finally {
       setIsLoading(false);
@@ -86,7 +85,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Hook to use the context
+// Hook
 export const useChat = () => {
   const context = useContext(ChatContext);
   if (!context) {
