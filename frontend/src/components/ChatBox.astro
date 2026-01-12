@@ -1,51 +1,87 @@
-<div class="card chat-box">
+---
+/**
+ * ChatBox.astro
+ * AI Negotiator Chat (Client Side)
+ */
+---
+
+<div class="card chat-box" client:load>
   <div class="chat-header">
-    <div style="display: flex; align-items: center; gap: 10px;">
+    <div style="display:flex; align-items:center; gap:10px;">
       <div class="bot-avatar">🤖</div>
       <div>
-        <h3 style="margin: 0; font-size: 1rem;">AI Negotiator</h3>
-        <span style="font-size: 0.75rem; color: var(--accent); font-weight: 600;">● Online & Ready</span>
+        <h3 style="margin:0; font-size:1rem;">AI Negotiator</h3>
+        <span style="font-size:.75rem; color:var(--accent); font-weight:600;">
+          ● Online & Ready
+        </span>
       </div>
     </div>
   </div>
-  
+
   <div id="chat-history" class="chat-history">
     <div class="msg ai">
-      <strong>Hello!</strong> 👋 <br>
-      I can find the best group discounts for you. Click a suggestion below or type your wish!
+      <strong>Hello!</strong> 👋 <br />
+      I can find the best group discounts for you.
+      Click a suggestion below or type your wish!
     </div>
   </div>
 
-  <div id="typing-indicator" class="typing-indicator" style="display: none;">
-    <span>●</span><span>●</span><span>●</span> AI is negotiating...
+  <div
+    id="typing-indicator"
+    class="typing-indicator"
+    style="display:none;"
+  >
+    <span>●</span><span>●</span><span>●</span>
+    AI is negotiating...
   </div>
 
   <div class="quick-actions">
-    <button class="chip" data-query="I want a MacBook Pro with 5 people">💻 MacBook Pro</button>
-    <button class="chip" data-query="I need an iPhone 15 group deal">📱 iPhone 15</button>
-    <button class="chip" data-query="Nike Air Jordan bulk buy">👟 Nike Shoes</button>
+    <button class="chip" data-query="I want a MacBook Pro with 5 people">
+      💻 MacBook Pro
+    </button>
+    <button class="chip" data-query="I need an iPhone 15 group deal">
+      📱 iPhone 15
+    </button>
+    <button class="chip" data-query="Nike Air Jordan bulk buy">
+      👟 Nike Shoes
+    </button>
   </div>
 
   <div class="input-area">
-    <input type="text" id="chat-input" placeholder="Type your wish here..." autocomplete="off" />
+    <input
+      type="text"
+      id="chat-input"
+      placeholder="Type your wish here..."
+      autocomplete="off"
+    />
     <button id="send-btn">Send</button>
   </div>
 </div>
 
 <style>
-  /* Quick Action Chips */
+  .bot-avatar {
+    width: 35px;
+    height: 35px;
+    background: #eff6ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+
   .quick-actions {
     display: flex;
     gap: 8px;
     padding: 0 1rem 1rem;
     overflow-x: auto;
     white-space: nowrap;
-    scrollbar-width: none; /* Hide scrollbar */
+    scrollbar-width: none;
   }
+
   .chip {
     background: #f1f5f9;
     border: 1px solid #e2e8f0;
-    color: var(--text-main);
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 0.8rem;
@@ -53,22 +89,13 @@
     transition: 0.2s;
     font-weight: 500;
   }
+
   .chip:hover {
     background: var(--primary);
     color: white;
     border-color: var(--primary);
   }
 
-  /* Bot Avatar */
-  .bot-avatar {
-    width: 35px; height: 35px;
-    background: #eff6ff;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem;
-  }
-
-  /* Typing Animation */
   .typing-indicator {
     padding: 0 1.5rem 1rem;
     font-size: 0.8rem;
@@ -77,109 +104,120 @@
     gap: 4px;
     align-items: center;
   }
+
   .typing-indicator span {
     animation: blink 1.4s infinite both;
     font-size: 1.2rem;
   }
-  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
 
-  /* Existing Styles... */
+  .typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes blink {
+    0% { opacity: 0.2; }
+    20% { opacity: 1; }
+    100% { opacity: 0.2; }
+  }
 </style>
 
-<script>
-  import { api } from '../utils/api.js';
+<script type="module">
+  import { api } from "../utils/api.js";
 
-  const input = document.getElementById('chat-input');
-  const btn = document.getElementById('send-btn');
-  const history = document.getElementById('chat-history');
-  const typing = document.getElementById('typing-indicator');
-  const chips = document.querySelectorAll('.chip');
-  
+  const input = document.getElementById("chat-input");
+  const btn = document.getElementById("send-btn");
+  const history = document.getElementById("chat-history");
+  const typing = document.getElementById("typing-indicator");
+  const chips = document.querySelectorAll(".chip");
+
   let messages = [];
 
-  // 👇 HACKATHON SAFETY NET: Demo Data (যদি Backend ঘুমায়ে থাকে)
+  // 🧪 DEMO FALLBACK DEALS (Hackathon Safe)
   const DEMO_DEALS = {
-    'macbook': {
+    macbook: {
       productName: "MacBook Pro M3",
       category: "Electronics",
       price: 1499,
       targetMembers: 5,
-      description: "Apple MacBook Pro M3 Chip - Bulk Deal"
     },
-    'iphone': {
+    iphone: {
       productName: "iPhone 15 Pro",
       category: "Mobile",
       price: 999,
       targetMembers: 10,
-      description: "Brand new iPhone 15 Pro - Titanium"
     },
-    'nike': {
+    nike: {
       productName: "Nike Air Jordan 1",
       category: "Fashion",
       price: 120,
       targetMembers: 20,
-      description: "Classic Air Jordan High Tops"
-    }
+    },
   };
 
   async function sendMessage(customText = null) {
     const text = customText || input.value.trim();
     if (!text) return;
 
-    // UI Update
-    appendMsg(text, 'user');
-    input.value = '';
-    
-    // Disable UI & Show Typing
+    appendMsg(text, "user");
+    input.value = "";
+
     btn.disabled = true;
-    typing.style.display = 'flex'; // Show animation
+    typing.style.display = "flex";
 
     try {
-      // API Call
-      const res = await api.post('/ai/chat', { 
+      const res = await api.post("/ai/chat", {
         message: text,
-        address: 'guest_user',
-        context: messages.slice(-5)
+        address: "guest_user",
+        context: messages.slice(-5),
       });
 
-      typing.style.display = 'none'; // Hide animation
-      appendMsg(res.data.response, 'ai');
+      typing.style.display = "none";
+      appendMsg(res.data.response, "ai");
 
-      // 🔥 Real Deal Trigger
       if (res.data.deal) {
-        window.dispatchEvent(new CustomEvent('deal-found', { detail: res.data.deal }));
+        window.dispatchEvent(
+          new CustomEvent("deal-found", { detail: res.data.deal })
+        );
       }
-    } catch (e) {
-      console.error("Backend Error/Sleep:", e);
-      typing.style.display = 'none';
-      
-      // 🔥 FALLBACK LOGIC: Hackathon "Fake it till you make it"
-      // যদি সার্ভার অফ থাকে, আমরা লোকাল ডেমো ডাটা দেখাবো।
-      
-      const lowerText = text.toLowerCase();
-      let fallbackDeal = null;
+    } catch (err) {
+      console.warn("Backend sleeping, using demo deal");
 
-      if (lowerText.includes('macbook')) fallbackDeal = DEMO_DEALS['macbook'];
-      else if (lowerText.includes('iphone')) fallbackDeal = DEMO_DEALS['iphone'];
-      else if (lowerText.includes('nike') || lowerText.includes('shoe')) fallbackDeal = DEMO_DEALS['nike'];
+      typing.style.display = "none";
 
-      if (fallbackDeal) {
-        appendMsg(`🚀 I found a live deal for <strong>${fallbackDeal.productName}</strong> on the blockchain! Check the card on the left.`, 'ai');
-        window.dispatchEvent(new CustomEvent('deal-found', { detail: fallbackDeal }));
+      const t = text.toLowerCase();
+      let deal = null;
+
+      if (t.includes("macbook")) deal = DEMO_DEALS.macbook;
+      else if (t.includes("iphone")) deal = DEMO_DEALS.iphone;
+      else if (t.includes("nike") || t.includes("shoe"))
+        deal = DEMO_DEALS.nike;
+
+      if (deal) {
+        appendMsg(
+          `🚀 I found a live deal for <strong>${deal.productName}</strong>. Check the card on the left!`,
+          "ai"
+        );
+        window.dispatchEvent(
+          new CustomEvent("deal-found", { detail: deal })
+        );
       } else {
-        appendMsg("🤖 AI is connecting to the blockchain... (Cold Start). Try clicking the 'MacBook' suggestion button!", 'ai');
+        appendMsg(
+          "🤖 AI warming up... Try clicking one of the suggestions above!",
+          "ai"
+        );
       }
     } finally {
-      btn.innerText = 'Send';
       btn.disabled = false;
       input.focus();
     }
   }
 
   function appendMsg(text, role) {
-    const div = document.createElement('div');
+    const div = document.createElement("div");
     div.className = `msg ${role}`;
     div.innerHTML = text;
     history.appendChild(div);
@@ -187,15 +225,12 @@
     messages.push({ role, content: text });
   }
 
-  // Event Listeners
-  btn.addEventListener('click', () => sendMessage());
-  input.addEventListener('keypress', (e) => e.key === 'Enter' && sendMessage());
-  
-  // Chip Click Handler
-  chips.forEach(chip => {
-    chip.addEventListener('click', (e) => {
-      const query = e.target.getAttribute('data-query');
-      sendMessage(query);
+  btn.addEventListener("click", () => sendMessage());
+  input.addEventListener("keydown", (e) => e.key === "Enter" && sendMessage());
+
+  chips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      sendMessage(chip.dataset.query);
     });
   });
 </script>
