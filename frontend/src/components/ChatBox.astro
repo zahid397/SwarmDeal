@@ -1,0 +1,80 @@
+<div class="card chat-box">
+  <div class="header">
+    <h3>🤖 AI Negotiator</h3>
+    <span class="status">● Active</span>
+  </div>
+  
+  <div id="chat-history" class="history">
+    <div class="msg ai">Hello! Tell me what you want to buy (e.g., "MacBook for 5 people").</div>
+  </div>
+
+  <div class="input-area">
+    <input type="text" id="chat-input" placeholder="Type here..." />
+    <button id="send-btn">Send</button>
+  </div>
+</div>
+
+<style>
+  .chat-box { height: 600px; display: flex; flex-direction: column; }
+  .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 1rem; margin-bottom: 1rem; }
+  .status { color: var(--accent); font-size: 0.8rem; }
+  .history { flex: 1; overflow-y: auto; padding-right: 5px; display: flex; flex-direction: column; gap: 0.8rem; }
+  .msg { padding: 10px 14px; border-radius: 12px; max-width: 85%; font-size: 0.95rem; line-height: 1.4; }
+  .ai { background: #334155; align-self: flex-start; border-top-left-radius: 2px; }
+  .user { background: var(--primary); align-self: flex-end; border-top-right-radius: 2px; }
+  .input-area { display: flex; gap: 0.5rem; margin-top: 1rem; }
+</style>
+
+<script>
+  import { api } from '../utils/api.js';
+
+  const input = document.getElementById('chat-input');
+  const btn = document.getElementById('send-btn');
+  const history = document.getElementById('chat-history');
+  let messages = [];
+
+  async function sendMessage() {
+    const text = input.value.trim();
+    if (!text) return;
+
+    // UI Update
+    appendMsg(text, 'user');
+    input.value = '';
+    btn.innerText = '...';
+    btn.disabled = true;
+
+    try {
+      // ✅ Call Live Backend
+      const res = await api.post('/ai/chat', { 
+        message: text,
+        address: 'guest_astro',
+        context: messages.slice(-5)
+      });
+
+      appendMsg(res.data.response, 'ai');
+
+      // 🔥 Event Dispatch for DealCard
+      if (res.data.deal) {
+        window.dispatchEvent(new CustomEvent('deal-found', { detail: res.data.deal }));
+      }
+    } catch (e) {
+      console.error(e);
+      appendMsg("Server error. Is the backend running?", 'ai');
+    } finally {
+      btn.innerText = 'Send';
+      btn.disabled = false;
+    }
+  }
+
+  function appendMsg(text, role) {
+    const div = document.createElement('div');
+    div.className = `msg ${role}`;
+    div.innerText = text;
+    history.appendChild(div);
+    history.scrollTop = history.scrollHeight;
+    messages.push({ role, content: text });
+  }
+
+  btn.addEventListener('click', sendMessage);
+  input.addEventListener('keypress', (e) => e.key === 'Enter' && sendMessage());
+</script>
