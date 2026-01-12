@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwarmDeal - AI-Powered Group Buying</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤝</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo-icon">🤝</div>
+                <h1 class="logo-text">SwarmDeal</h1>
+                <span class="beta-badge">BETA</span>
+            </div>
+            <div class="header-actions">
+                <button class="btn-secondary" id="demo-btn">
+                    <i class="fas fa-bolt"></i> Quick Demo
+                </button>
+                <button class="btn-ghost" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Left Column: Chat Interface -->
+            <div class="chat-column">
+                <div class="chat-header">
+                    <h2><i class="fas fa-robot"></i> AI Shopping Assistant</h2>
+                    <p class="subtitle">Describe what you want to buy, and our AI will find the best group deal</p>
+                </div>
+                
+                <div class="chat-container">
+                    <div class="chat-messages" id="chat-messages">
+                        <!-- Initial welcome message -->
+                        <div class="message ai-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-sender">SwarmAI</div>
+                                <div class="message-text">
+                                    Hi! I'm your AI shopping assistant. Tell me what you'd like to buy, and I'll search for the best group buying deals. The more people interested, the lower the price!
+                                </div>
+                                <div class="message-time">Just now</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Example messages -->
+                        <div class="message user-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-sender">You</div>
+                                <div class="message-text">
+                                    I'm looking for a high-quality wireless headset for work
+                                </div>
+                                <div class="message-time">2 min ago</div>
+                            </div>
+                        </div>
+                        
+                        <div class="message ai-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-sender">SwarmAI</div>
+                                <div class="message-text">
+                                    Great choice! Let me search for wireless headsets with good microphone quality and noise cancellation.
+                                </div>
+                                <div class="message-time">1 min ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Typing indicator (hidden by default) -->
+                    <div class="typing-indicator" id="typing-indicator">
+                        <div class="typing-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="typing-content">
+                            <div class="typing-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Input -->
+                    <div class="chat-input-container">
+                        <div class="input-wrapper">
+                            <input 
+                                type="text" 
+                                id="chat-input" 
+                                placeholder="Describe what you want to buy (e.g., 'gaming laptop', 'yoga mat', 'air fryer')"
+                                autocomplete="off"
+                            >
+                            <button id="send-btn" class="send-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="input-hint">
+                            <i class="fas fa-lightbulb"></i> Pro tip: Be specific for better deals (brand, features, budget)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-footer">
+                    <div class="features-grid">
+                        <div class="feature">
+                            <i class="fas fa-users"></i>
+                            <span>Group Discounts</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-bolt"></i>
+                            <span>Fast AI Matching</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Verified Sellers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Deal Cards -->
+            <div class="deals-column">
+                <div class="deals-header">
+                    <h2><i class="fas fa-bolt"></i> Active Swarm Deals</h2>
+                    <p class="subtitle">Deals found by AI based on user requests</p>
+                    <div class="deal-stats">
+                        <div class="stat">
+                            <div class="stat-value" id="active-deals">3</div>
+                            <div class="stat-label">Active Deals</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" id="total-users">142</div>
+                            <div class="stat-label">Swarm Members</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="deals-container" id="deals-container">
+                    <!-- Deal cards will be dynamically added here -->
+                    <div class="deal-card featured">
+                        <div class="deal-badge">HOT DEAL</div>
+                        <div class="deal-image" style="background-color: #3a86ff;">
+                            <i class="fas fa-headphones"></i>
+                        </div>
+                        <div class="deal-content">
+                            <h3 class="deal-title">Premium Wireless Headset</h3>
+                            <p class="deal-description">Noise-cancelling microphone, 30hr battery, premium comfort</p>
+                            
+                            <div class="deal-progress">
+                                <div class="progress-info">
+                                    <span class="progress-label">Group Progress</span>
+                                    <span class="progress-value">18/25</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 72%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="deal-pricing">
+                                <div class="original-price">$129.99</div>
+                                <div class="current-price">$89.99<span class="price-note">/unit</span></div>
+                                <div class="discount-badge">31% OFF</div>
+                            </div>
+                            
+                            <div class="deal-actions">
+                                <button class="btn-primary join-deal">
+                                    <i class="fas fa-user-plus"></i> Join Swarm
+                                </button>
+                                <button class="btn-secondary">
+                                    <i class="fas fa-share"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="deal-card">
+                        <div class="deal-image" style="background-color: #8338ec;">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <div class="deal-content">
+                            <h3 class="deal-title">Gaming Laptop RTX 4060</h3>
+                            <p class="deal-description">15.6" FHD 144Hz, Intel i7, 16GB RAM, 1TB SSD</p>
+                            
+                            <div class="deal-progress">
+                                <div class="progress-info">
+                                    <span class="progress-label">Group Progress</span>
+                                    <span class="progress-value">12/20</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="deal-pricing">
+                                <div class="original-price">$1,299.99</div>
+                                <div class="current-price">$999.99<span class="price-note">/unit</span></div>
+                                <div class="discount-badge">23% OFF</div>
+                            </div>
+                            
+                            <div class="deal-actions">
+                                <button class="btn-primary join-deal">
+                                    <i class="fas fa-user-plus"></i> Join Swarm
+                                </button>
+                                <button class="btn-secondary">
+                                    <i class="fas fa-share"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="deal-card">
+                        <div class="deal-image" style="background-color: #ff006e;">
+                            <i class="fas fa-blender"></i>
+                        </div>
+                        <div class="deal-content">
+                            <h3 class="deal-title">6-in-1 Air Fryer Oven</h3>
+                            <p class="deal-description">Digital touchscreen, 8 presets, family size capacity</p>
+                            
+                            <div class="deal-progress">
+                                <div class="progress-info">
+                                    <span class="progress-label">Group Progress</span>
+                                    <span class="progress-value">24/30</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 80%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="deal-pricing">
+                                <div class="original-price">$179.99</div>
+                                <div class="current-price">$119.99<span class="price-note">/unit</span></div>
+                                <div class="discount-badge">33% OFF</div>
+                            </div>
+                            
+                            <div class="deal-actions">
+                                <button class="btn-primary join-deal">
+                                    <i class="fas fa-user-plus"></i> Join Swarm
+                                </button>
+                                <button class="btn-secondary">
+                                    <i class="fas fa-share"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="deals-footer">
+                    <p><i class="fas fa-info-circle"></i> Deals activate when enough people join. Invite friends for faster unlocking!</p>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Toast notification for new deals -->
+        <div class="toast" id="toast">
+            <div class="toast-content">
+                <i class="fas fa-bell"></i>
+                <div class="toast-text">New deal found! Check the deals panel.</div>
+            </div>
+            <button class="toast-close" id="toast-close">&times;</button>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
