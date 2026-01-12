@@ -1,0 +1,21 @@
+<nav class="nav">
+  <div class="brand">
+    <span style="font-size: 1.8rem;">🐝</span> 
+    <span style="font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px;">SwarmDeal</span>
+  </div>
+  <div class="status">
+    <span class="dot"></span> Systems Online
+  </div>
+</nav>
+
+<style>
+  .nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0; margin-bottom: 2rem; }
+  .brand { display: flex; align-items: center; gap: 8px; color: var(--text-main); }
+  .status { 
+    background: #fff; border: 1px solid var(--border); padding: 6px 12px; 
+    border-radius: 20px; font-size: 0.85rem; font-weight: 600; color: var(--success);
+    display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  .dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 50% { opacity: 0.5; } }
+</style>
