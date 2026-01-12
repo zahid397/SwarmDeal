@@ -1,62 +1,99 @@
 <div id="deal-card" class="card deal-wrapper" style="display: none;">
-  <div class="deal-header">
-    <span class="badge">🔥 AI Suggested Deal</span>
-    <span class="discount">20% OFF</span>
-  </div>
-
-  <h2 id="deal-title" style="margin: 1rem 0;">Product Name</h2>
+  <div class="deal-badge">🔥 Hot Deal Found</div>
   
-  <div class="stats">
-    <div>
-      <span class="label">Price</span>
-      <div id="deal-price" class="value">$0</div>
+  <h2 id="deal-title">MacBook Pro M3</h2>
+  <div class="category" id="deal-category">Electronics</div>
+
+  <div class="pricing-grid">
+    <div class="price-box">
+      <span class="label">Group Price</span>
+      <div class="price" id="deal-price">$1200</div>
     </div>
-    <div>
-      <span class="label">Members</span>
-      <div id="deal-members" class="value">0</div>
+    <div class="divider"></div>
+    <div class="meta-box">
+      <span class="label">Target</span>
+      <div class="meta" id="deal-members">5 People</div>
     </div>
   </div>
 
-  <button id="create-btn" class="launch-btn">🚀 Launch Group Buy</button>
+  <button id="create-btn" class="btn-primary">🚀 Launch Group Now</button>
 </div>
 
 <style>
-  .deal-wrapper { background: linear-gradient(145deg, #1e293b, #0f172a); border-color: var(--primary); animation: slideUp 0.5s ease; }
-  .deal-header { display: flex; justify-content: space-between; }
-  .badge { background: var(--primary); font-size: 0.8rem; padding: 4px 10px; border-radius: 20px; }
-  .discount { color: var(--accent); font-weight: bold; }
-  .stats { display: flex; gap: 2rem; margin-bottom: 1.5rem; }
-  .label { font-size: 0.8rem; color: #94a3b8; }
-  .value { font-size: 1.8rem; font-weight: bold; }
-  .launch-btn { background: linear-gradient(to right, var(--primary), #8b5cf6); }
-  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .deal-wrapper {
+    border: 1px solid var(--primary);
+    background: #fefeff;
+    position: relative;
+    overflow: hidden;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  /* Background Shine Effect */
+  .deal-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 6px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+  }
+
+  .deal-badge {
+    display: inline-block;
+    background: #fee2e2;
+    color: #ef4444;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 0.5rem;
+  }
+
+  h2 { font-size: 1.75rem; color: var(--text-main); margin-bottom: 0.2rem; }
+  .category { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+  .pricing-grid {
+    display: flex;
+    align-items: center;
+    background: var(--bg);
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .price-box { flex: 1; }
+  .divider { width: 1px; height: 40px; background: var(--border); margin: 0 1.5rem; }
+  .meta-box { flex: 1; }
+
+  .label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; letter-spacing: 0.5px; display: block; margin-bottom: 4px; }
+  .price { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+  .meta { font-size: 1.2rem; font-weight: 600; color: var(--text-main); }
+
+  @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 </style>
 
 <script>
   import { api } from '../utils/api.js';
-
+  // Logic same as before...
   const card = document.getElementById('deal-card');
   const title = document.getElementById('deal-title');
+  const category = document.getElementById('deal-category');
   const price = document.getElementById('deal-price');
   const members = document.getElementById('deal-members');
   const btn = document.getElementById('create-btn');
   let activeDeal = null;
 
-  // Listen for event from ChatBox
   window.addEventListener('deal-found', (e) => {
     activeDeal = e.detail;
     title.innerText = activeDeal.productName;
+    category.innerText = activeDeal.category || 'General';
     price.innerText = `$${activeDeal.price}`;
-    members.innerText = activeDeal.targetMembers;
+    members.innerText = `${activeDeal.targetMembers} People`;
     card.style.display = 'block';
   });
 
-  // Handle Create Logic
   btn.addEventListener('click', async () => {
     if (!activeDeal) return;
     btn.innerText = 'Creating...';
     btn.disabled = true;
-
     try {
       await api.post('/groups/create', {
         productName: activeDeal.productName,
@@ -67,14 +104,9 @@
         targetMembers: activeDeal.targetMembers,
         dealExpiresAt: new Date(Date.now() + 86400000)
       });
-      alert('✅ Group Created Successfully!');
+      alert('✅ Group Created!');
       card.style.display = 'none';
-    } catch (e) {
-      console.error(e);
-      alert('❌ Failed to create group');
-    } finally {
-      btn.innerText = '🚀 Launch Group Buy';
-      btn.disabled = false;
-    }
+    } catch (e) { alert('❌ Creation Failed'); } 
+    finally { btn.innerText = '🚀 Launch Group Now'; btn.disabled = false; }
   });
 </script>
