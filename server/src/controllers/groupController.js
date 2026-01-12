@@ -1,13 +1,18 @@
-// server/src/controllers/groupController.js
-
 export const createGroup = async (req, res) => {
   try {
-    const { name } = req.body;
+    const {
+      productName,
+      category,
+      originalPrice,
+      currentPrice,
+      targetPrice,
+      targetMembers,
+    } = req.body;
 
-    if (!name) {
+    if (!productName) {
       return res.status(400).json({
         success: false,
-        message: "Group name required",
+        message: "Product name required",
       });
     }
 
@@ -16,7 +21,13 @@ export const createGroup = async (req, res) => {
       message: "Group created successfully",
       data: {
         id: Date.now(),
-        name,
+        productName,
+        category,
+        originalPrice,
+        currentPrice,
+        targetPrice,
+        targetMembers,
+        createdAt: new Date(),
       },
     });
   } catch (err) {
@@ -25,11 +36,4 @@ export const createGroup = async (req, res) => {
       error: err.message,
     });
   }
-};
-
-export const getGroups = async (req, res) => {
-  return res.json({
-    success: true,
-    data: [],
-  });
 };
