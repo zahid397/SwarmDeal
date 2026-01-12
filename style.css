@@ -1,0 +1,794 @@
+/* CSS Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #3a86ff;
+    --primary-dark: #2667cc;
+    --secondary: #8338ec;
+    --accent: #ff006e;
+    --success: #06d6a0;
+    --warning: #ffbe0b;
+    --danger: #ef476f;
+    
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --text-tertiary: #adb5bd;
+    
+    --border-color: #dee2e6;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+    
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.dark-mode {
+    --primary: #5a9cff;
+    --primary-dark: #3a86ff;
+    --secondary: #9d5cff;
+    --accent: #ff3385;
+    
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --bg-tertiary: #2d2d2d;
+    
+    --text-primary: #f8f9fa;
+    --text-secondary: #adb5bd;
+    --text-tertiary: #6c757d;
+    
+    --border-color: #343a40;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.5;
+    transition: var(--transition);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 24px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 32px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    font-size: 32px;
+    line-height: 1;
+}
+
+.logo-text {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.beta-badge {
+    background: linear-gradient(90deg, var(--accent), var(--warning));
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 20px;
+    margin-left: 8px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Button Styles */
+.btn-primary, .btn-secondary, .btn-ghost {
+    padding: 10px 18px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    box-shadow: 0 2px 8px rgba(58, 134, 255, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(58, 134, 255, 0.4);
+}
+
+.btn-secondary {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--bg-tertiary);
+    border-color: var(--text-tertiary);
+}
+
+.btn-ghost {
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid transparent;
+}
+
+.btn-ghost:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Main Content Layout */
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    flex: 1;
+    margin-bottom: 40px;
+}
+
+@media (max-width: 1024px) {
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+}
+
+/* Chat Column */
+.chat-column, .deals-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header, .deals-header {
+    margin-bottom: 24px;
+}
+
+.chat-header h2, .deals-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Chat Container */
+.chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Message Styles */
+.message {
+    display: flex;
+    gap: 12px;
+    animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.user-message {
+    flex-direction: row-reverse;
+}
+
+.user-message .message-content {
+    align-items: flex-end;
+}
+
+.message-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.user-message .message-avatar {
+    background: linear-gradient(135deg, var(--accent), var(--warning));
+}
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+    max-width: 75%;
+}
+
+.message-sender {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+}
+
+.message-text {
+    background-color: var(--bg-primary);
+    padding: 14px 18px;
+    border-radius: var(--radius-lg);
+    font-size: 15px;
+    line-height: 1.5;
+    box-shadow: var(--shadow);
+}
+
+.ai-message .message-text {
+    border-top-left-radius: 4px;
+}
+
+.user-message .message-text {
+    background-color: var(--primary);
+    color: white;
+    border-top-right-radius: 4px;
+}
+
+.message-time {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 6px;
+}
+
+/* Typing Indicator */
+.typing-indicator {
+    display: flex;
+    gap: 12px;
+    padding: 0 24px 24px;
+    display: none;
+}
+
+.typing-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.typing-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.typing-dots {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 18px;
+    background-color: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    width: fit-content;
+}
+
+.typing-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--text-tertiary);
+    display: inline-block;
+    animation: typingAnimation 1.5s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(1) {
+    animation-delay: 0s;
+}
+.typing-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.typing-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typingAnimation {
+    0%, 100% {
+        opacity: 0.4;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-5px);
+    }
+}
+
+/* Chat Input */
+.chat-input-container {
+    padding: 20px 24px;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    margin-bottom: 12px;
+}
+
+#chat-input {
+    flex: 1;
+    padding: 16px 20px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    font-size: 15px;
+    transition: var(--transition);
+}
+
+#chat-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.1);
+}
+
+.send-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.send-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.input-hint {
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Chat Footer */
+.chat-footer {
+    margin-top: 24px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+.feature:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.feature i {
+    color: var(--primary);
+}
+
+/* Deals Column */
+.deal-stats {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.stat {
+    text-align: center;
+    padding: 16px;
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+/* Deals Container */
+.deals-container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    overflow-y: auto;
+    max-height: 700px;
+    padding-right: 8px;
+}
+
+@media (max-width: 768px) {
+    .deals-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Deal Cards */
+.deal-card {
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    animation: slideInRight 0.5s ease-out;
+    position: relative;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.deal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.deal-card.featured {
+    border-color: var(--warning);
+    border-width: 2px;
+}
+
+.deal-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: linear-gradient(90deg, var(--warning), var(--danger));
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    z-index: 1;
+}
+
+.deal-image {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 64px;
+}
+
+.deal-content {
+    padding: 20px;
+}
+
+.deal-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.deal-description {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* Deal Progress */
+.deal-progress {
+    margin-bottom: 20px;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.progress-label {
+    color: var(--text-secondary);
+}
+
+.progress-value {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: var(--bg-tertiary);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 4px;
+    transition: width 0.8s ease;
+}
+
+/* Deal Pricing */
+.deal-pricing {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.original-price {
+    font-size: 16px;
+    color: var(--text-tertiary);
+    text-decoration: line-through;
+}
+
+.current-price {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.price-note {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-left: 4px;
+}
+
+.discount-badge {
+    background-color: var(--success);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-left: auto;
+}
+
+/* Deal Actions */
+.deal-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.deal-actions .btn-primary, .deal-actions .btn-secondary {
+    flex: 1;
+    padding: 12px;
+}
+
+.deal-actions .btn-secondary {
+    flex: 0 0 50px;
+}
+
+/* Deals Footer */
+.deals-footer {
+    margin-top: 24px;
+    padding: 16px;
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.deals-footer i {
+    color: var(--primary);
+}
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background-color: var(--bg-primary);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    max-width: 400px;
+    z-index: 1000;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.toast-content i {
+    color: var(--warning);
+    font-size: 20px;
+}
+
+.toast-text {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.toast-close:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 16px;
+    }
+    
+    .header {
+        padding: 16px 0;
+    }
+    
+    .logo-text {
+        font-size: 24px;
+    }
+    
+    .main-content {
+        gap: 24px;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .deal-stats {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .chat-messages {
+        max-height: 400px;
+    }
+    
+    .toast {
+        left: 16px;
+        right: 16px;
+        max-width: calc(100% - 32px);
+    }
+}
