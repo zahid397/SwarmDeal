@@ -1,34 +1,35 @@
-/* 🌟 IMPORT INTER FONT */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap');
+/* 🌟 IMPORT PREMIUM FONT */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --bg-color: #f8fafc;       /* Clean Light Gray */
-  --surface: #ffffff;        /* Pure White */
-  --primary: #4f46e5;        /* Premium Indigo */
+  --bg: #f8fafc;           /* Clean Light Background */
+  --surface: #ffffff;      /* Pure White Cards */
+  --primary: #4f46e5;      /* Indigo Brand Color */
   --primary-hover: #4338ca;
-  --text-main: #0f172a;      /* Dark Slate */
-  --text-muted: #64748b;     /* Muted Slate */
-  --border: #e2e8f0;
-  --accent: #10b981;         /* Green for success */
-  --shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --text-main: #0f172a;    /* Dark Slate Text */
+  --text-muted: #64748b;   /* Soft Grey Text */
+  --border: #e2e8f0;       /* Light Borders */
+  --accent: #10b981;       /* Success Green */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background-color: var(--bg-color);
+  background-color: var(--bg);
   color: var(--text-main);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
-/* 🏗️ LAYOUT */
+/* 🏗️ LAYOUT SYSTEM */
 .container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Split 50-50 */
+  grid-template-columns: 1.1fr 0.9fr; /* Left slightly bigger */
   gap: 4rem;
   align-items: center;
   min-height: 90vh;
@@ -36,15 +37,10 @@ body {
 
 @media (max-width: 900px) {
   .container { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+  .hero-content { align-items: center; }
 }
 
-/* 🦸‍♂️ HERO SECTION */
-.hero-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
+/* 🦸‍♂️ TYPOGRAPHY */
 h1 {
   font-size: 3.5rem;
   font-weight: 800;
@@ -66,59 +62,52 @@ p.subtitle {
   font-size: 1.25rem;
   color: var(--text-muted);
   margin-bottom: 2rem;
-  max-width: 500px;
+  max-width: 480px;
 }
 
-/* 🛡️ TRUST BADGES (New Addition) */
+/* 🛡️ TRUST BADGE */
 .trust-badges {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-main);
-  margin-top: 1rem;
   background: white;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border-radius: 50px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
   width: fit-content;
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  margin-bottom: 2rem;
 }
 
-@media (max-width: 900px) {
-  .trust-badges { margin: 1rem auto; }
-}
-
-/* 🤖 CHAT CARD (The Star Show) */
-.chat-box {
+/* 📦 CARDS (Global) */
+.card {
   background: var(--surface);
-  border-radius: 24px;
-  box-shadow: var(--shadow);
   border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* 🤖 CHAT UI */
+.chat-box {
   height: 600px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  transition: transform 0.3s ease;
 }
 
-.chat-box:hover {
-  transform: translateY(-5px); /* Subtle hover effect */
-}
-
-/* Header */
-.header {
-  padding: 1.5rem;
+.chat-header {
+  padding: 1.2rem 1.5rem;
   border-bottom: 1px solid var(--border);
-  background: rgba(255,255,255,0.8);
-  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(8px);
 }
 
-.header h3 { font-size: 1.1rem; font-weight: 700; margin: 0; }
-.status { font-size: 0.8rem; color: var(--accent); font-weight: 600; }
-
-/* Messages Area */
-.history {
+.chat-history {
   flex: 1;
   overflow-y: auto;
   padding: 1.5rem;
@@ -128,34 +117,20 @@ p.subtitle {
   background: #fcfcfc;
 }
 
-/* 💬 BUBBLES (WhatsApp Style) */
+/* Messages */
 .msg {
   max-width: 80%;
   padding: 12px 16px;
   border-radius: 16px;
   font-size: 0.95rem;
-  line-height: 1.5;
-  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: slideUp 0.3s ease;
 }
+.ai { background: #f1f5f9; color: var(--text-main); border-bottom-left-radius: 4px; }
+.user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
 
-.ai {
-  background: #f1f5f9; /* Light Gray */
-  color: var(--text-main);
-  align-self: flex-start;
-  border-bottom-left-radius: 4px;
-}
-
-.user {
-  background: var(--primary);
-  color: white;
-  align-self: flex-end;
-  border-bottom-right-radius: 4px;
-  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
-}
-
-/* ⌨️ INPUT AREA (Modern) */
+/* Input */
 .input-area {
-  padding: 1.2rem;
+  padding: 1rem;
   background: var(--surface);
   border-top: 1px solid var(--border);
   display: flex;
@@ -166,33 +141,24 @@ input {
   flex: 1;
   padding: 12px 16px;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 10px;
   font-size: 1rem;
   outline: none;
-  transition: all 0.2s;
+  transition: 0.2s;
 }
+input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
 
-input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-}
-
-button#send-btn {
+button {
   background: var(--primary);
   color: white;
   border: none;
-  padding: 0 24px;
-  border-radius: 12px;
+  padding: 0 20px;
+  border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: 0.2s;
 }
+button:hover { opacity: 0.9; transform: translateY(-1px); }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
 
-button#send-btn:hover { opacity: 0.9; }
-button#send-btn:disabled { background: var(--text-muted); cursor: not-allowed; }
-
-/* 🎭 ANIMATIONS */
-@keyframes popIn {
-  from { opacity: 0; transform: translateY(10px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
+@keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
