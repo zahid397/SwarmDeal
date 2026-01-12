@@ -2,19 +2,26 @@
   <div class="logo">
     <span class="icon">🐝</span> SwarmDeal
   </div>
+
   <div class="status-badge">
-    <span class="dot"></span> System Online
+    <span class="dot"></span>
+    System Online
   </div>
 </nav>
 
 <style>
   .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 0;
     margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
   }
+
   .logo {
     font-size: 1.5rem;
     font-weight: 800;
@@ -23,22 +30,41 @@
     align-items: center;
     gap: 8px;
   }
+
+  .icon {
+    font-size: 1.7rem;
+  }
+
   .status-badge {
-    background: #ecfdf5; /* Light Green */
+    background: #ecfdf5;
     color: var(--accent);
-    padding: 6px 12px;
-    border-radius: 20px;
+    padding: 6px 14px;
+    border-radius: 999px;
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 700;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     border: 1px solid #d1fae5;
   }
+
   .dot {
     width: 8px;
     height: 8px;
     background: var(--accent);
     border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
+    }
+    70% {
+      box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
   }
 </style>
