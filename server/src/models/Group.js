@@ -1,27 +1,16 @@
-// server/src/models/Group.js
+import mongoose from 'mongoose';
 
-class Group {
-  constructor({ id, name, ownerId }) {
-    this.id = id || null;
-    this.name = name || "";
-    this.ownerId = ownerId || null;
-    this.createdAt = new Date();
-  }
+const groupSchema = new mongoose.Schema(
+  {
+    productName: { type: String, required: true },
+    category: String,
+    originalPrice: Number,
+    currentPrice: Number,
+    targetPrice: Number,
+    targetMembers: Number,
+    owner: { type: String }, // wallet or user id
+  },
+  { timestamps: true }
+);
 
-  async save() {
-    return {
-      success: true,
-      group: this,
-    };
-  }
-
-  static async findById(id) {
-    return null;
-  }
-
-  static async findAll() {
-    return [];
-  }
-}
-
-export default Group;
+export default mongoose.model('Group', groupSchema);
