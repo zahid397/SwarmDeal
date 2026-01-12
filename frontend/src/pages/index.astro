@@ -6,22 +6,97 @@ import DealCard from '../components/DealCard.astro';
 ---
 
 <BaseLayout>
-  <Navbar />
-  <main class="container">
-    <div style="padding-top: 2rem;">
-      <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem;">
-        Group Buying, <br/>
-        <span style="color: var(--primary)">AI Powered.</span>
-      </h1>
-      <p style="color: #94a3b8; font-size: 1.2rem; margin-bottom: 3rem; max-width: 450px;">
-        Use AI to negotiate bulk discounts. Join forces securely with smart contracts.
-      </p>
-      
-      <DealCard />
-    </div>
+  <div class="container">
+    <Navbar />
+    
+    <main class="grid-layout">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          Group Buying, <br />
+          <span class="highlight">AI Powered.</span>
+        </h1>
+        <p class="hero-sub">
+          Stop overpaying. Join forces with strangers to negotiate bulk discounts. 
+          Secured by Smart Contracts, Optimized by Gemini AI.
+        </p>
+        
+        <div class="trust-badges">
+          <span>🛡️ Secure Escrow</span>
+          <span>🤖 AI Negotiator</span>
+          <span>⚡ Instant Settlement</span>
+        </div>
 
-    <div>
-      <ChatBox />
-    </div>
-  </main>
+        <div style="margin-top: 2rem;">
+          <DealCard />
+        </div>
+      </div>
+
+      <div class="chat-wrapper">
+        <ChatBox />
+      </div>
+    </main>
+  </div>
 </BaseLayout>
+
+<style>
+  .grid-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 900px) {
+    .grid-layout { grid-template-columns: 1fr; gap: 3rem; }
+  }
+
+  .hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text-main);
+    margin-bottom: 1.5rem;
+  }
+
+  .highlight {
+    color: var(--primary);
+    background: linear-gradient(120deg, #e0e7ff 0%, #e0e7ff 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 30%;
+    background-position: 0 88%;
+  }
+
+  .hero-sub {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 500px;
+    margin-bottom: 2rem;
+  }
+
+  .trust-badges {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  .chat-wrapper {
+    position: relative;
+  }
+  /* Decorative Blur behind Chat */
+  .chat-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #4f46e520, #10b98120);
+    border-radius: 24px;
+    z-index: -1;
+    filter: blur(40px);
+  }
+</style>
