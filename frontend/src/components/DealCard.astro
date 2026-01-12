@@ -1,0 +1,80 @@
+<div id="deal-card" class="card deal-wrapper" style="display: none;">
+  <div class="deal-header">
+    <span class="badge">🔥 AI Suggested Deal</span>
+    <span class="discount">20% OFF</span>
+  </div>
+
+  <h2 id="deal-title" style="margin: 1rem 0;">Product Name</h2>
+  
+  <div class="stats">
+    <div>
+      <span class="label">Price</span>
+      <div id="deal-price" class="value">$0</div>
+    </div>
+    <div>
+      <span class="label">Members</span>
+      <div id="deal-members" class="value">0</div>
+    </div>
+  </div>
+
+  <button id="create-btn" class="launch-btn">🚀 Launch Group Buy</button>
+</div>
+
+<style>
+  .deal-wrapper { background: linear-gradient(145deg, #1e293b, #0f172a); border-color: var(--primary); animation: slideUp 0.5s ease; }
+  .deal-header { display: flex; justify-content: space-between; }
+  .badge { background: var(--primary); font-size: 0.8rem; padding: 4px 10px; border-radius: 20px; }
+  .discount { color: var(--accent); font-weight: bold; }
+  .stats { display: flex; gap: 2rem; margin-bottom: 1.5rem; }
+  .label { font-size: 0.8rem; color: #94a3b8; }
+  .value { font-size: 1.8rem; font-weight: bold; }
+  .launch-btn { background: linear-gradient(to right, var(--primary), #8b5cf6); }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
+<script>
+  import { api } from '../utils/api.js';
+
+  const card = document.getElementById('deal-card');
+  const title = document.getElementById('deal-title');
+  const price = document.getElementById('deal-price');
+  const members = document.getElementById('deal-members');
+  const btn = document.getElementById('create-btn');
+  let activeDeal = null;
+
+  // Listen for event from ChatBox
+  window.addEventListener('deal-found', (e) => {
+    activeDeal = e.detail;
+    title.innerText = activeDeal.productName;
+    price.innerText = `$${activeDeal.price}`;
+    members.innerText = activeDeal.targetMembers;
+    card.style.display = 'block';
+  });
+
+  // Handle Create Logic
+  btn.addEventListener('click', async () => {
+    if (!activeDeal) return;
+    btn.innerText = 'Creating...';
+    btn.disabled = true;
+
+    try {
+      await api.post('/groups/create', {
+        productName: activeDeal.productName,
+        category: activeDeal.category || 'general',
+        originalPrice: activeDeal.price * 1.2,
+        currentPrice: activeDeal.price,
+        targetPrice: activeDeal.price,
+        targetMembers: activeDeal.targetMembers,
+        dealExpiresAt: new Date(Date.now() + 86400000)
+      });
+      alert('✅ Group Created Successfully!');
+      card.style.display = 'none';
+    } catch (e) {
+      console.error(e);
+      alert('❌ Failed to create group');
+    } finally {
+      btn.innerText = '🚀 Launch Group Buy';
+      btn.disabled = false;
+    }
+  });
+</script>
