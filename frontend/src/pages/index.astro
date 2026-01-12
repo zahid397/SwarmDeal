@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import ChatBox from '../components/ChatBox.astro';
+import DealCard from '../components/DealCard.astro';
+---
+
+<BaseLayout>
+  <Navbar />
+  <main class="container">
+    <div style="padding-top: 2rem;">
+      <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem;">
+        Group Buying, <br/>
+        <span style="color: var(--primary)">AI Powered.</span>
+      </h1>
+      <p style="color: #94a3b8; font-size: 1.2rem; margin-bottom: 3rem; max-width: 450px;">
+        Use AI to negotiate bulk discounts. Join forces securely with smart contracts.
+      </p>
+      
+      <DealCard />
+    </div>
+
+    <div>
+      <ChatBox />
+    </div>
+  </main>
+</BaseLayout>
