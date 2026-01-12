@@ -1,66 +1,90 @@
 :root {
-  --bg-dark: #0f172a;
-  --bg-card: #1e293b;
-  --primary: #6366f1;
-  --primary-hover: #4f46e5;
-  --text: #f8fafc;
-  --text-muted: #94a3b8;
-  --accent: #10b981;
+  /* ✨ Premium Light Theme */
+  --bg: #f8fafc;           /* Slate-50 */
+  --surface: #ffffff;      /* White */
+  --primary: #4f46e5;      /* Indigo-600 */
+  --primary-hover: #4338ca;
+  --text-main: #0f172a;    /* Slate-900 */
+  --text-muted: #64748b;   /* Slate-500 */
+  --border: #e2e8f0;       /* Slate-200 */
+  --accent: #10b981;       /* Emerald-500 */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, sans-serif;
-  background: var(--bg-dark);
-  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
   line-height: 1.6;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: start;
+  padding: 0 2rem;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-@media (max-width: 768px) {
-  .container { grid-template-columns: 1fr; gap: 2rem; }
+/* Typography */
+h1, h2, h3 { margin: 0; letter-spacing: -0.025em; }
+
+button {
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
+/* Card Style (Premium SaaS Look) */
 .card {
-  background: var(--bg-card);
-  border: 1px solid #334155;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 16px;
+  box-shadow: var(--shadow-lg);
   padding: 1.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
+/* Input Fields */
 input {
   width: 100%;
-  background: #020617;
-  border: 1px solid #334155;
-  color: white;
-  padding: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
   border-radius: 8px;
-  margin-top: 10px;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  background: var(--bg);
+  transition: border-color 0.2s;
   box-sizing: border-box;
 }
 
-button {
+input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Primary Button */
+.btn-primary {
   background: var(--primary);
   color: white;
   border: none;
-  padding: 12px 20px;
+  padding: 12px 24px;
   border-radius: 8px;
-  cursor: pointer;
   font-weight: 600;
+  font-size: 1rem;
   width: 100%;
-  margin-top: 10px;
-  transition: 0.2s;
 }
-button:hover { background: var(--primary-hover); }
-button:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-primary:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
