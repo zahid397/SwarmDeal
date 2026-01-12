@@ -1,74 +1,155 @@
-<div id="deal-card" class="card deal-wrapper" style="display: none;">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+---
+/**
+ * DealCard.astro
+ * Client-side interactive component
+ */
+---
+
+<div
+  id="deal-card"
+  class="card deal-wrapper"
+  style="display:none"
+  client:load
+>
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:.5rem;">
     <span class="badge">🔥 Hot Pick</span>
     <span class="discount">20% OFF</span>
   </div>
 
-  <h2 id="deal-title" style="font-size: 1.5rem; margin-bottom: 0.2rem;">Product Name</h2>
-  <div id="deal-cat" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Category</div>
-  
+  <h2 id="deal-title" style="font-size:1.5rem; margin-bottom:.2rem;">
+    Product Name
+  </h2>
+
+  <div
+    id="deal-cat"
+    style="color:var(--text-muted); font-size:.9rem; margin-bottom:1.5rem;"
+  >
+    Category
+  </div>
+
   <div class="stats-grid">
     <div>
       <span class="label">Target Price</span>
       <div id="deal-price" class="val">$0</div>
     </div>
-    <div style="border-left: 1px solid var(--border);"></div>
+
+    <div style="border-left:1px solid var(--border);"></div>
+
     <div>
       <span class="label">Group Size</span>
       <div id="deal-members" class="val">0</div>
     </div>
   </div>
 
-  <button id="create-btn" style="width: 100%; margin-top: 1rem;">🚀 Launch Group Buy</button>
+  <button id="create-btn" style="width:100%; margin-top:1rem;">
+    🚀 Launch Group Buy
+  </button>
 </div>
 
 <style>
-  .deal-wrapper { border: 1px solid var(--primary); animation: slideUp 0.5s ease; }
-  .badge { background: #fee2e2; color: #ef4444; font-weight: 700; font-size: 0.75rem; padding: 4px 10px; border-radius: 20px; }
-  .discount { color: var(--accent); font-weight: 700; }
-  
-  .stats-grid { display: flex; justify-content: space-around; background: var(--bg); padding: 1rem; border-radius: 12px; }
-  .label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; display: block; margin-bottom: 4px; }
-  .val { font-size: 1.25rem; font-weight: 800; color: var(--text-main); }
+  .deal-wrapper {
+    border: 1px solid var(--primary);
+    animation: slideUp 0.4s ease;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .badge {
+    background: #fee2e2;
+    color: #ef4444;
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .discount {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .stats-grid {
+    display: flex;
+    justify-content: space-around;
+    background: var(--bg);
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .val {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-main);
+  }
 </style>
 
-<script>
-  import { api } from '../utils/api.js';
+<script type="module">
+  import { api } from "../utils/api.js";
 
-  const card = document.getElementById('deal-card');
-  const title = document.getElementById('deal-title');
-  const cat = document.getElementById('deal-cat');
-  const price = document.getElementById('deal-price');
-  const members = document.getElementById('deal-members');
-  const btn = document.getElementById('create-btn');
+  const card = document.getElementById("deal-card");
+  const title = document.getElementById("deal-title");
+  const cat = document.getElementById("deal-cat");
+  const price = document.getElementById("deal-price");
+  const members = document.getElementById("deal-members");
+  const btn = document.getElementById("create-btn");
+
   let activeDeal = null;
 
-  window.addEventListener('deal-found', (e) => {
+  // 🔔 Listen when AI / chat finds a deal
+  window.addEventListener("deal-found", (e) => {
     activeDeal = e.detail;
-    title.innerText = activeDeal.productName;
-    cat.innerText = activeDeal.category || 'General';
-    price.innerText = `$${activeDeal.price}`;
-    members.innerText = `${activeDeal.targetMembers} People`;
-    card.style.display = 'block';
+
+    title.textContent = activeDeal.productName;
+    cat.textContent = activeDeal.category || "General";
+    price.textContent = `$${activeDeal.price}`;
+    members.textContent = `${activeDeal.targetMembers} People`;
+
+    card.style.display = "block";
   });
 
-  btn.addEventListener('click', async () => {
+  // 🚀 Create group
+  btn.addEventListener("click", async () => {
     if (!activeDeal) return;
-    btn.innerText = 'Creating...';
+
+    btn.textContent = "Creating...";
     btn.disabled = true;
+
     try {
-      await api.post('/groups/create', {
+      await api.post("/groups", {
         productName: activeDeal.productName,
-        category: activeDeal.category || 'general',
+        category: activeDeal.category || "general",
         originalPrice: activeDeal.price * 1.2,
         currentPrice: activeDeal.price,
         targetPrice: activeDeal.price,
         targetMembers: activeDeal.targetMembers,
-        dealExpiresAt: new Date(Date.now() + 86400000)
       });
-      alert('✅ Group Created Successfully!');
-      card.style.display = 'none';
-    } catch (e) { alert('❌ Failed to create group'); } 
-    finally { btn.innerText = '🚀 Launch Group Buy'; btn.disabled = false; }
+
+      alert("✅ Group Created Successfully!");
+      card.style.display = "none";
+    } catch (err) {
+      console.error(err);
+      alert("❌ Failed to create group");
+    } finally {
+      btn.textContent = "🚀 Launch Group Buy";
+      btn.disabled = false;
+    }
   });
 </script>
