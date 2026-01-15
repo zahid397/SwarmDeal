@@ -117,15 +117,15 @@
                 
                 <div class="chat-footer">
                     <div class="features-grid">
-                        <div class="feature">
+                        <div class="feature" id="group-discounts-btn">
                             <i class="fas fa-users"></i>
                             <span>Group Discounts</span>
                         </div>
-                        <div class="feature">
+                        <div class="feature" id="fast-ai-matching-btn">
                             <i class="fas fa-bolt"></i>
                             <span>Fast AI Matching</span>
                         </div>
-                        <div class="feature">
+                        <div class="feature" id="verified-sellers-btn">
                             <i class="fas fa-shield-alt"></i>
                             <span>Verified Sellers</span>
                         </div>
@@ -152,7 +152,7 @@
                 
                 <div class="deals-container" id="deals-container">
                     <!-- Deal cards will be dynamically added here -->
-                    <div class="deal-card featured">
+                    <div class="deal-card featured" data-deal-id="1">
                         <div class="deal-badge">HOT DEAL</div>
                         <div class="deal-image" style="background-color: #3a86ff;">
                             <i class="fas fa-headphones"></i>
@@ -178,17 +178,17 @@
                             </div>
                             
                             <div class="deal-actions">
-                                <button class="btn-primary join-deal">
+                                <button class="btn-primary join-deal" data-deal-id="1">
                                     <i class="fas fa-user-plus"></i> Join Swarm
                                 </button>
-                                <button class="btn-secondary">
+                                <button class="btn-secondary share-deal" data-deal-id="1">
                                     <i class="fas fa-share"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="deal-card">
+                    <div class="deal-card" data-deal-id="2">
                         <div class="deal-image" style="background-color: #8338ec;">
                             <i class="fas fa-laptop"></i>
                         </div>
@@ -213,17 +213,17 @@
                             </div>
                             
                             <div class="deal-actions">
-                                <button class="btn-primary join-deal">
+                                <button class="btn-primary join-deal" data-deal-id="2">
                                     <i class="fas fa-user-plus"></i> Join Swarm
                                 </button>
-                                <button class="btn-secondary">
+                                <button class="btn-secondary share-deal" data-deal-id="2">
                                     <i class="fas fa-share"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="deal-card">
+                    <div class="deal-card" data-deal-id="3">
                         <div class="deal-image" style="background-color: #ff006e;">
                             <i class="fas fa-blender"></i>
                         </div>
@@ -248,10 +248,10 @@
                             </div>
                             
                             <div class="deal-actions">
-                                <button class="btn-primary join-deal">
+                                <button class="btn-primary join-deal" data-deal-id="3">
                                     <i class="fas fa-user-plus"></i> Join Swarm
                                 </button>
-                                <button class="btn-secondary">
+                                <button class="btn-secondary share-deal" data-deal-id="3">
                                     <i class="fas fa-share"></i>
                                 </button>
                             </div>
@@ -272,6 +272,31 @@
                 <div class="toast-text">New deal found! Check the deals panel.</div>
             </div>
             <button class="toast-close" id="toast-close">&times;</button>
+        </div>
+        
+        <!-- Modal for deal creation -->
+        <div class="modal" id="deal-creation-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Create New Deal Request</h3>
+                    <button class="modal-close" id="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Describe what you're looking for and our AI will find the best group deal for you!</p>
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="deal-request-input" 
+                            placeholder="e.g., 'Ergonomic office chair with lumbar support'"
+                            autocomplete="off"
+                        >
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn-secondary" id="cancel-deal-btn">Cancel</button>
+                        <button class="btn-primary" id="submit-deal-btn">Submit Request</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     
