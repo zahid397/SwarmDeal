@@ -389,7 +389,7 @@ body {
     margin-bottom: 12px;
 }
 
-#chat-input {
+#chat-input, #deal-request-input {
     flex: 1;
     padding: 16px 20px;
     border-radius: var(--radius-lg);
@@ -401,7 +401,7 @@ body {
     transition: var(--transition);
 }
 
-#chat-input:focus {
+#chat-input:focus, #deal-request-input:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.1);
@@ -461,11 +461,28 @@ body {
     font-weight: 500;
     color: var(--text-secondary);
     transition: var(--transition);
+    cursor: pointer;
+    user-select: none;
 }
 
 .feature:hover {
     background-color: var(--bg-tertiary);
     color: var(--text-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.feature:active {
+    transform: translateY(0);
+}
+
+.feature.active {
+    background-color: var(--primary);
+    color: white;
+}
+
+.feature.active i {
+    color: white;
 }
 
 .feature i {
@@ -548,6 +565,24 @@ body {
     border-width: 2px;
 }
 
+.deal-card.activated {
+    border-color: var(--success);
+    border-width: 2px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(6, 214, 160, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(6, 214, 160, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(6, 214, 160, 0);
+    }
+}
+
 .deal-badge {
     position: absolute;
     top: 12px;
@@ -559,6 +594,10 @@ body {
     padding: 4px 10px;
     border-radius: 20px;
     z-index: 1;
+}
+
+.deal-badge.activated {
+    background: linear-gradient(90deg, var(--success), #06a078);
 }
 
 .deal-image {
@@ -623,6 +662,10 @@ body {
     transition: width 0.8s ease;
 }
 
+.progress-fill.activated {
+    background: linear-gradient(90deg, var(--success), #06d6a0);
+}
+
 /* Deal Pricing */
 .deal-pricing {
     display: flex;
@@ -669,6 +712,15 @@ body {
 .deal-actions .btn-primary, .deal-actions .btn-secondary {
     flex: 1;
     padding: 12px;
+}
+
+.deal-actions .btn-primary.joined {
+    background-color: var(--success);
+    pointer-events: none;
+}
+
+.deal-actions .btn-primary.joined i::before {
+    content: "\f00c";
 }
 
 .deal-actions .btn-secondary {
@@ -755,6 +807,94 @@ body {
     color: var(--text-primary);
 }
 
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    width: 90%;
+    max-width: 500px;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(20px);
+    transition: var(--transition);
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    font-size: 28px;
+    cursor: pointer;
+    line-height: 1;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.modal-close:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.modal-body {
+    padding: 24px;
+}
+
+.modal-body p {
+    margin-bottom: 20px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .container {
@@ -790,5 +930,10 @@ body {
         left: 16px;
         right: 16px;
         max-width: calc(100% - 32px);
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 0 16px;
     }
 }
