@@ -3,7 +3,7 @@
 **AI-Augmented Group Buying Assistant (Live Demo)**  
 Built for Agentic Commerce on Arc Hackathon (Jan 2026)
 
-🔗 **Live Demo:** https://hivedeal.netlify.app/
+🔗 **Live Demo:** https://5d9d82d7.swarmdeal.pages.dev/
 
 SwarmDeal is an AI shopping assistant demo that explores the idea of
 **group buying via conversational interaction**.  
