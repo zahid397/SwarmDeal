@@ -1,39 +1,72 @@
-SwarmDeal (Demo Project)
-AI-powered group buying assistant
-Describe what you want to buy → AI finds potential group deals → price drops as more people join.
-🎯 What is SwarmDeal?
-SwarmDeal is a lightweight AI shopping assistant that helps users discover group buying opportunities.
-Instead of searching multiple sites, users describe their needs in natural language and the AI responds with deal-oriented guidance.
-This project is built as a working demo to showcase:
-Conversational UI
-AI-driven intent understanding
-Group-buying concept validation
-🧠 Key Features
-Chat-style AI interface
-Natural language product requests
-Emphasis on group demand → lower prices
-Clean, mobile-friendly UI
-Instant demo (no login required)
-🛠️ Tech Stack
-Frontend: HTML5, CSS3, Vanilla JavaScript
-UI: Chat-style layout, responsive design
-AI Logic: Demo / simulated responses (concept-focused)
-🚀 Live Demo
-🔗 Demo URL:
-https://hivedeal.netlify.app/
+# SwarmDeal 🛒
 
-📌 Why this demo exists
-This project serves as a backup / concept demo to demonstrate:
-Product thinking
-UI/UX execution
-AI-assisted commerce ideas
-The core project (PayPerInsight) focuses on AI + crypto micropayments, while SwarmDeal demonstrates user-facing AI interaction.
-🔮 Future Improvements
-Real product search integration
-Live group deal aggregation
-Payment & checkout flow
-User interest tracking
-Backend AI reasoning layer
-👤 Author
-Zahid Hasan
+**AI-Augmented Group Buying Assistant (Live Demo)**  
+Built for Agentic Commerce on Arc Hackathon (Jan 2026)
+
+🔗 **Live Demo:** https://hivedeal.netlify.app/
+
+SwarmDeal is an AI shopping assistant demo that explores the idea of
+**group buying via conversational interaction**.  
+Users describe what they want to buy, and the agent responds with
+deal-oriented guidance based on user input and inferred group value.
+
+This demo highlights user experience and product concept—
+not a full payment/escrow backend yet.
+
+---
+
+## Demo Scope
+
+- Natural-language product request interface  
+- AI-style conversational UI (interactive chat)  
+- Basic group buying flow logic  
+- Clean, responsive frontend
+
+This version focuses on UI/UX and interaction flow.  
+Blockchain and payments components are **conceptual / simulated** at this stage.
+
+---
+
+## Features (Current)
+
+- Simple, user-friendly chat interface  
+- AI conversational flow for buying intent  
+- Visual group deal concept suggestions  
+- Works without login
+
+---
+
+## Tech Stack
+
+- **Frontend:** HTML5, CSS3, Vanilla JavaScript  
+- **Hosting:** Netlify (Live demo)  
+- **AI Responses:** Placeholder or basic logic (demo focus)
+
+---
+
+## Architecture & Future Work
+
+While this demo version runs entirely in the browser,
+the full planned architecture envisions:
+
+- AI reasoning with Gemini or similar API  
+- Dynamic group matching and pricing logic  
+- USDC micropayment flows via Circle Programmable Wallets  
+- Arc testnet settlement and verification
+
+---
+
+## Why SwarmDeal Matters
+
+SwarmDeal presents a prototype for how **agentic commerce interfaces**
+could work:  
+simple conversation → clear product intent → value-driven deal insights.
+
+It’s not just a static UI—it’s a conceptual step toward *AI-mediated collective value*.
+
+---
+
+## Author
+
+**Zahid Hasan**  
 GitHub: https://github.com/zahid397
