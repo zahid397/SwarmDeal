@@ -18,7 +18,6 @@ services:
       - PORT=5000
       - MONGODB_URI=mongodb://mongodb:27017/swarmdeal
       - NODE_ENV=development
-      # Add API Keys in server/.env or here
     depends_on:
       - mongodb
     volumes:
@@ -37,8 +36,6 @@ services:
     volumes:
       - ./client:/app
       - /app/node_modules
-      - /app/.next
 
 volumes:
   mongodb_data:
-  
