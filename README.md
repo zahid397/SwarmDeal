@@ -1,68 +1,99 @@
 # SwarmDeal 🛒
 
-**AI-Augmented Group Buying Assistant (Live Demo)**  
-Built for Agentic Commerce on Arc Hackathon (Jan 2026)
+## AI-Augmented Group Buying Assistant (Live Demo)
 
-🔗 **Live Demo:** https://5d9d82d7.swarmdeal.pages.dev/
+Built for **Agentic Commerce**  
+Hackathon Submission – GTM Hackathon 2026
 
-SwarmDeal is an AI shopping assistant demo that explores the idea of
-**group buying via conversational interaction**.  
-Users describe what they want to buy, and the agent responds with
-deal-oriented guidance based on user input and inferred group value.
+🔗 **Live Demo:**  
+https://5d9d82d7.swarmdeal.pages.dev/
 
-This demo highlights user experience and product concept—
-not a full payment/escrow backend yet.
+---
+
+## Overview
+
+SwarmDeal is an AI-augmented shopping assistant that explores the concept of
+**group buying through conversational interaction**.
+
+Users describe what they want to buy in natural language, and the system
+responds with **deal-oriented guidance** based on inferred intent, group value,
+and enrichment-driven insights.
+
+This submission focuses on **product concept, UX, and agentic flow design**.
+
+---
+
+## Key Features
+
+- Natural-language product request interface  
+- Conversational AI-style chat UI  
+- Group buying concept visualization  
+- Deal-oriented recommendations demonstrating collective value  
+- Clean, responsive frontend demo  
+- No login required
+
+---
+
+## FullEnrich API Integration (Demo / Simulated)
+
+This project is **designed to use the FullEnrich API** as its primary data
+enrichment layer.
+
+In the demo version, **FullEnrich-compatible enrichment flows are simulated**
+to demonstrate how enriched firmographic and intent data would power:
+
+- Buyer and company enrichment  
+- Smarter group matching  
+- Intent-based deal prioritization  
+- Higher-confidence purchasing signals
+
+In a production implementation, SwarmDeal would directly consume the
+**FullEnrich API** for real-time enrichment of buyer and company data.
 
 ---
 
 ## Demo Scope
 
-- Natural-language product request interface  
-- AI-style conversational UI (interactive chat)  
-- Basic group buying flow logic  
-- Clean, responsive frontend
+This hackathon submission intentionally focuses on:
 
-This version focuses on UI/UX and interaction flow.  
-Blockchain and payments components are **conceptual / simulated** at this stage.
+- Agentic interaction flow
+- Enrichment-driven decision logic (conceptual)
+- UI/UX for conversational commerce
 
----
-
-## Features (Current)
-
-- Simple, user-friendly chat interface  
-- AI conversational flow for buying intent  
-- Visual group deal concept suggestions  
-- Works without login
+Blockchain settlement, payments, and live API calls are **out of scope** for
+this demo and represented conceptually.
 
 ---
 
 ## Tech Stack
 
 - **Frontend:** HTML5, CSS3, Vanilla JavaScript  
-- **Hosting:** Netlify (Live demo)  
-- **AI Responses:** Placeholder or basic logic (demo focus)
+- **Hosting:** Cloudflare Pages / Netlify  
+- **Data Enrichment:** FullEnrich API (simulated in demo)  
+- **Architecture:** Client-side demo with planned backend integration
 
 ---
 
 ## Architecture & Future Work
 
-While this demo version runs entirely in the browser,
-the full planned architecture envisions:
+Planned production architecture includes:
 
-- AI reasoning with Gemini or similar API  
-- Dynamic group matching and pricing logic  
-- USDC micropayment flows via Circle Programmable Wallets  
-- Arc testnet settlement and verification
+- Live FullEnrich API integration for buyer/company enrichment  
+- Advanced intent scoring and group formation logic  
+- Payment flows (e.g., USDC via programmable wallets)  
+- On-chain or off-chain settlement verification  
+- Scalable agent orchestration layer
 
 ---
 
 ## Why SwarmDeal Matters
 
-SwarmDeal presents a prototype for how **agentic commerce interfaces**
-could work:  
-simple conversation → clear product intent → value-driven deal insights.
+SwarmDeal demonstrates how **agentic commerce** can transform buying behavior:
 
-It’s not just a static UI—it’s a conceptual step toward *AI-mediated collective value*.
+**Conversation → Enriched intent → Collective value → Better deals**
+
+Rather than static e-commerce flows, this project explores
+AI-mediated collaboration and value discovery.
 
 ---
 
